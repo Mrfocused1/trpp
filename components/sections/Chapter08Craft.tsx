@@ -19,7 +19,7 @@ export default function Chapter08Craft() {
   const threadRef = useRef<SVGPathElement>(null);
   const needleRef = useRef<SVGGElement>(null);
 
-  useEffect() => {
+  useEffect(() => {
     const thread = threadRef.current;
     const needle = needleRef.current;
 

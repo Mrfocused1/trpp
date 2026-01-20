@@ -23,7 +23,7 @@ export default function Chapter11Shop() {
         <div className="relative aspect-square bg-gray-100 flex items-center justify-center overflow-hidden p-12">
           <div className="relative w-full h-full">
             <Image
-              src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=2574&auto=format&fit=crop"
+              src="/images/core-hoodie.jpg"
               alt="Shop Hoodie"
               fill
               className="object-contain mix-blend-multiply"

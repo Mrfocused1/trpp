@@ -53,10 +53,10 @@ export default function Chapter07Hoodie() {
       className="chapter-section flex items-center justify-center bg-hundred-concrete"
       data-title="THE HOODIE"
     >
-      <div className="relative w-full max-w-4xl aspect-[4/5] md:aspect-video bg-black overflow-hidden group">
+      <div className="relative w-full max-w-5xl aspect-[4/5] md:aspect-[16/10] bg-black overflow-hidden group">
         {/* Background Product */}
         <Image
-          src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=2574&auto=format&fit=crop"
+          src="/images/core-hoodie.jpg"
           alt="Hoodie Background"
           fill
           className="object-cover opacity-30"
@@ -68,9 +68,9 @@ export default function Chapter07Hoodie() {
           className="absolute inset-0 bg-hundred-black flex items-center justify-center"
           style={{ clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)' }}
         >
-          <div className="relative w-full h-4/5">
+          <div className="relative w-full h-full p-8 md:p-12">
             <Image
-              src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=2574&auto=format&fit=crop"
+              src="/images/core-hoodie.jpg"
               alt="The Hoodie"
               fill
               className="object-contain drop-shadow-2xl"

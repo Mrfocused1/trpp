@@ -12,14 +12,12 @@ import Chapter03Code from '@/components/sections/Chapter03Code';
 import Chapter04Route from '@/components/sections/Chapter04Route';
 import Chapter05Sound from '@/components/sections/Chapter05Sound';
 import Chapter06Archive from '@/components/sections/Chapter06Archive';
-import Chapter07Hoodie from '@/components/sections/Chapter07Hoodie';
 import Chapter08Craft from '@/components/sections/Chapter08Craft';
-import Chapter09Community from '@/components/sections/Chapter09Community';
 import Chapter10Drop from '@/components/sections/Chapter10Drop';
 import Chapter11Shop from '@/components/sections/Chapter11Shop';
 import Chapter12SignOff from '@/components/sections/Chapter12SignOff';
 
-const TOTAL_CHAPTERS = 12;
+const TOTAL_CHAPTERS = 10;
 
 export default function Home() {
   return (
@@ -37,9 +35,7 @@ export default function Home() {
           <Chapter04Route />
           <Chapter05Sound />
           <Chapter06Archive />
-          <Chapter07Hoodie />
           <Chapter08Craft />
-          <Chapter09Community />
           <Chapter10Drop />
           <Chapter11Shop />
           <Chapter12SignOff />

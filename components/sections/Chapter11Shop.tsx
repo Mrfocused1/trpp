@@ -20,14 +20,15 @@ export default function Chapter11Shop() {
     >
       <div className="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
         {/* Product Image */}
-        <div className="relative aspect-square bg-gray-100 flex items-center justify-center overflow-hidden">
-          <Image
-            src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=2574&auto=format&fit=crop"
-            alt="Shop Hoodie"
-            fill
-            className="object-contain mix-blend-multiply"
-            style={{ width: '75%', height: '75%', objectFit: 'contain' }}
-          />
+        <div className="relative aspect-square bg-gray-100 flex items-center justify-center overflow-hidden p-12">
+          <div className="relative w-full h-full">
+            <Image
+              src="https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=2574&auto=format&fit=crop"
+              alt="Shop Hoodie"
+              fill
+              className="object-contain mix-blend-multiply"
+            />
+          </div>
         </div>
 
         {/* Product Details */}

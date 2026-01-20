@@ -26,8 +26,8 @@ export default function Chapter08Craft() {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '#ch08',
-        start: 'top 20%',
-        end: 'bottom 20%',
+        start: 'top top',
+        end: '+=1500',
         scrub: 1,
         pin: true,
         pinSpacing: true,

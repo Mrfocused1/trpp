@@ -43,15 +43,12 @@ export default function Chapter06Archive() {
           (panel as HTMLElement).style.scrollSnapAlign = 'start';
         });
       } else {
-        // On desktop, use ScrollTrigger animation
+        // On desktop, use ScrollTrigger animation WITHOUT pinning
         scrollTriggerInstance = ScrollTrigger.create({
           trigger: wrapper,
           start: 'top top',
-          end: () => `+=${scrollDistance}`,
-          pin: true,
-          pinSpacing: true,
+          end: 'bottom bottom',
           scrub: 1,
-          anticipatePin: 1,
           id: 'archive-horizontal-scroll',
           onUpdate: (self) => {
             gsap.to(container, {
@@ -79,14 +76,15 @@ export default function Chapter06Archive() {
     <section
       ref={wrapperRef}
       id="ch06-wrapper"
-      className="chapter-section bg-white text-black overflow-hidden md:overflow-visible"
+      className="bg-white text-black overflow-hidden h-screen md:h-[300vh]"
       data-title="ARCHIVE"
     >
-      <div
-        ref={containerRef}
-        id="ch06-container"
-        className="flex h-screen w-[400vw] md:overflow-visible"
-      >
+      <div className="sticky top-0 h-screen">
+        <div
+          ref={containerRef}
+          id="ch06-container"
+          className="flex h-screen w-[400vw]"
+        >
         {/* Panel 1 */}
         <div className="w-screen h-full flex items-center justify-center border-r border-black/10 relative">
           <div className="text-center">
@@ -130,6 +128,7 @@ export default function Chapter06Archive() {
             </p>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

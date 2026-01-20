@@ -21,8 +21,8 @@ const creepster = Creepster({
 });
 
 export const metadata: Metadata = {
-  title: "1 HUNDRED | The Code. The Culture.",
-  description: "Commitment. Showing Up. Staying Solid. Born in The Ends. Built to Last.",
+  title: "TRAPSTAR | London's Finest",
+  description: "Born in The Ends. Built for the streets. London's finest since day one.",
 };
 
 export default function RootLayout({

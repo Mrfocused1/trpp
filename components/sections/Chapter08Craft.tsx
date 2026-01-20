@@ -3,10 +3,10 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import Image from 'next/image';
 
 if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+  gsap.registerPlugin(ScrollTrigger);
 }
 
 const specs = [
@@ -16,14 +16,12 @@ const specs = [
 ];
 
 export default function Chapter08Craft() {
-  const threadRef = useRef<SVGPathElement>(null);
-  const needleRef = useRef<SVGGElement>(null);
+  const whiteJacketRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const thread = threadRef.current;
-    const needle = needleRef.current;
+    const whiteJacket = whiteJacketRef.current;
 
-    if (!thread || !needle) return;
+    if (!whiteJacket) return;
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -35,28 +33,14 @@ export default function Chapter08Craft() {
       },
     });
 
+    // Reveal white jacket from bottom to top like rising temperature
     tl.fromTo(
-      thread,
-      { strokeDasharray: 1000, strokeDashoffset: 1000 },
-      { strokeDashoffset: 0, ease: 'none' }
+      whiteJacket,
+      { clipPath: 'inset(100% 0 0 0)' },
+      { clipPath: 'inset(0% 0 0 0)', ease: 'none' }
     );
 
-    tl.to(
-      needle,
-      {
-        motionPath: {
-          path: '#seam-path',
-          align: '#seam-path',
-          alignOrigin: [0.5, 1],
-          autoRotate: true,
-        },
-        ease: 'none',
-        duration: 1,
-      },
-      '<'
-    );
-
-    // Reveal specs as needle passes
+    // Reveal specs as temperature rises
     tl.to('#spec-1', { opacity: 1, duration: 0.1 }, 0.2);
     tl.to('#spec-2', { opacity: 1, duration: 0.1 }, 0.5);
     tl.to('#spec-3', { opacity: 1, duration: 0.1 }, 0.8);
@@ -75,50 +59,55 @@ export default function Chapter08Craft() {
       className="chapter-section h-screen bg-neutral-900 overflow-hidden"
       data-title="CRAFT"
     >
-      <div className="container mx-auto h-full flex items-center justify-center relative">
+      <div className="container mx-auto h-full flex items-center justify-center relative px-4">
         {/* SVG Seam Interaction */}
-        <div className="relative w-full max-w-3xl aspect-video border border-white/5 bg-white/5 rounded-lg p-10">
-          <h3 className="absolute top-6 left-6 font-mono text-xs text-hundred-red uppercase">
+        <div className="relative w-full max-w-3xl md:aspect-video border border-white/5 bg-white/5 rounded-lg p-6 md:p-10">
+          <h3 className="font-mono text-xs text-hundred-red uppercase mb-6 md:mb-0 md:absolute md:top-6 md:left-6">
             Technical Specifications
           </h3>
 
-          <div className="grid grid-cols-2 h-full">
-            <div className="flex flex-col justify-center space-y-8 pr-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 h-full">
+            <div className="flex flex-col justify-center space-y-6 md:space-y-8 md:pr-10 order-2 md:order-1">
               {specs.map((spec) => (
                 <div
                   key={spec.id}
                   id={spec.id}
                   className="spec-item opacity-30 transition-opacity duration-300"
                 >
-                  <h4 className="font-display text-2xl">{spec.title}</h4>
-                  <p className="text-xs text-gray-400">{spec.desc}</p>
+                  <h4 className="font-display text-xl md:text-2xl">{spec.title}</h4>
+                  <p className="text-sm md:text-xs text-gray-400">{spec.desc}</p>
                 </div>
               ))}
             </div>
-            <div className="relative flex items-center justify-center">
-              {/* Seam Path Animation */}
-              <svg className="w-full h-full absolute inset-0" viewBox="0 0 300 300">
-                <path
-                  id="seam-path"
-                  d="M150,20 C150,20 180,50 150,80 C120,110 180,140 150,170 C120,200 180,230 150,260"
-                  stroke="#333"
-                  strokeWidth="2"
-                  fill="none"
-                  strokeDasharray="5,5"
+            <div className="relative flex items-center justify-center min-h-[300px] md:min-h-0 order-1 md:order-2">
+              {/* Base Jacket - Dark Gray */}
+              <div className="absolute inset-0 opacity-40">
+                <Image
+                  src="/images/jacket.svg"
+                  alt="Jacket Base"
+                  fill
+                  className="object-contain"
+                  style={{ filter: 'brightness(0.4) contrast(1.5)' }}
                 />
-                <path
-                  ref={threadRef}
-                  d="M150,20 C150,20 180,50 150,80 C120,110 180,140 150,170 C120,200 180,230 150,260"
-                  stroke="#cc1100"
-                  strokeWidth="2"
-                  fill="none"
-                />
+              </div>
 
-                {/* Needle */}
-                <g ref={needleRef}>
-                  <rect x="-1" y="-10" width="2" height="20" fill="#eee" />
-                </g>
-              </svg>
+              {/* White Jacket - Revealed on Scroll (Rising Temperature) */}
+              <div
+                ref={whiteJacketRef}
+                className="absolute inset-0"
+                style={{ clipPath: 'inset(100% 0 0 0)' }}
+              >
+                <Image
+                  src="/images/jacket.svg"
+                  alt="Jacket Heated"
+                  fill
+                  className="object-contain"
+                  style={{
+                    filter: 'brightness(20) saturate(0) contrast(2)',
+                    mixBlendMode: 'screen'
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

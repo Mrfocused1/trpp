@@ -11,24 +11,47 @@ if (typeof window !== 'undefined') {
 
 export default function Chapter06Archive() {
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      if (window.innerWidth > 768) {
-        const horizontalSections = gsap.utils.toArray('#ch06-container > div');
-        gsap.to(horizontalSections, {
-          xPercent: -100 * (horizontalSections.length - 1),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: '#ch06-wrapper',
-            pin: true,
-            scrub: 1,
-            snap: 1 / (horizontalSections.length - 1),
-            end: '+=3000',
-          },
-        });
-      }
-    });
+    let ctx: gsap.Context | null = null;
 
-    return () => ctx.revert();
+    // Small delay to ensure DOM is fully rendered
+    const timer = setTimeout(() => {
+      ctx = gsap.context(() => {
+        if (window.innerWidth > 768) {
+          const horizontalSections = gsap.utils.toArray('#ch06-container > div');
+
+          if (horizontalSections.length > 0) {
+            gsap.to(horizontalSections, {
+              xPercent: -100 * (horizontalSections.length - 1),
+              ease: 'none',
+              scrollTrigger: {
+                trigger: '#ch06-wrapper',
+                pin: true,
+                scrub: 1,
+                snap: 1 / (horizontalSections.length - 1),
+                end: () => `+=${horizontalSections.length * 1000}`,
+                id: 'archive-horizontal',
+                invalidateOnRefresh: true,
+              },
+            });
+
+            // Refresh ScrollTrigger after setup
+            ScrollTrigger.refresh();
+          }
+        }
+      });
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+      if (ctx) {
+        ctx.revert();
+      }
+      ScrollTrigger.getAll().forEach(trigger => {
+        if (trigger.vars.id === 'archive-horizontal') {
+          trigger.kill();
+        }
+      });
+    };
   }, []);
 
   return (
@@ -46,7 +69,7 @@ export default function Chapter06Archive() {
         <div className="w-screen h-full flex items-center justify-center border-r border-black/10 relative bg-gray-100 p-20">
           <div className="relative w-3/4 h-3/4">
             <Image
-              src="https://images.unsplash.com/photo-1549497557-047f078d46db?q=80&w=2670&auto=format&fit=crop"
+              src="https://uk.trapstarlondon.com/cdn/shop/files/Jacket.jpg?v=1766750491&width=3840"
               alt="Archive 1"
               fill
               className="object-cover grayscale hover:grayscale-0 transition-all duration-500 cursor-hover shadow-xl"

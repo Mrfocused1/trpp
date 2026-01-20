@@ -34,12 +34,9 @@ export default function Chapter06Archive() {
       const scrollDistance = totalWidth - viewportWidth;
 
       if (isMobile) {
-        // On mobile, enable native horizontal scroll
-        container.style.overflowX = 'auto';
-        container.style.scrollSnapType = 'x mandatory';
-        panels.forEach((panel) => {
-          (panel as HTMLElement).style.scrollSnapAlign = 'start';
-        });
+        // On mobile, native horizontal scroll is handled by Tailwind classes
+        // snap-x snap-mandatory on wrapper, snap-start on panels
+        // No ScrollTrigger needed
       } else {
         // On desktop, use horizontal scroll animation
         gsap.to(container, {
@@ -75,16 +72,17 @@ export default function Chapter06Archive() {
     <section
       ref={wrapperRef}
       id="ch06-wrapper"
-      className="bg-white text-black overflow-hidden h-screen"
+      className="bg-white text-black overflow-x-auto md:overflow-hidden h-screen snap-x snap-mandatory md:snap-none"
       data-title="ARCHIVE"
+      style={{ WebkitOverflowScrolling: 'touch' }}
     >
       <div
         ref={containerRef}
         id="ch06-container"
-        className="flex h-screen w-[400vw]"
+        className="flex h-screen w-[400vw] md:w-[400vw]"
       >
         {/* Panel 1 */}
-        <div className="w-screen h-full flex items-center justify-center border-r border-black/10 relative">
+        <div className="w-screen h-full flex items-center justify-center border-r border-black/10 relative snap-start">
           <div className="text-center">
             <h3 className="font-display text-9xl font-bold tracking-tighter mb-4">THE ARCHIVE</h3>
             <p className="font-mono text-sm uppercase">Swipe to explore history</p>
@@ -92,7 +90,7 @@ export default function Chapter06Archive() {
         </div>
 
         {/* Panel 2 */}
-        <div className="w-screen h-full flex items-center justify-center border-r border-black/10 relative bg-gray-100 p-20">
+        <div className="w-screen h-full flex items-center justify-center border-r border-black/10 relative bg-gray-100 p-20 snap-start">
           <div className="relative w-3/4 h-3/4">
             <Image
               src="https://uk.trapstarlondon.com/cdn/shop/files/Jacket.jpg?v=1766750491&width=3840"
@@ -105,7 +103,7 @@ export default function Chapter06Archive() {
         </div>
 
         {/* Panel 3 */}
-        <div className="w-screen h-full flex items-center justify-center border-r border-black/10 relative bg-gray-50 p-20">
+        <div className="w-screen h-full flex items-center justify-center border-r border-black/10 relative bg-gray-50 p-20 snap-start">
           <div className="relative w-3/4 h-3/4">
             <Image
               src="https://images.unsplash.com/photo-1614713568397-b30b7e6d20cc?q=80&w=2670&auto=format&fit=crop"
@@ -118,7 +116,7 @@ export default function Chapter06Archive() {
         </div>
 
         {/* Panel 4 */}
-        <div className="w-screen h-full flex items-center justify-center relative bg-black text-white p-20">
+        <div className="w-screen h-full flex items-center justify-center relative bg-black text-white p-20 snap-start">
           <div className="w-3/4 text-center">
             <h2 className="font-display text-8xl mb-6">BUILT TO LAST</h2>
             <p className="text-xl max-w-2xl mx-auto">

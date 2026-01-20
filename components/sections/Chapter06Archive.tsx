@@ -44,10 +44,11 @@ export default function Chapter06Archive() {
         });
       } else {
         // On desktop, use ScrollTrigger animation WITHOUT pinning
+        // Animation happens across the full height of the section
         scrollTriggerInstance = ScrollTrigger.create({
           trigger: wrapper,
           start: 'top top',
-          end: 'bottom bottom',
+          end: 'bottom top',
           scrub: 1,
           id: 'archive-horizontal-scroll',
           onUpdate: (self) => {

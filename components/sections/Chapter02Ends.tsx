@@ -120,7 +120,7 @@ export default function Chapter02Ends() {
             ref={(el) => {
               textReveals.current[0] = el;
             }}
-            className="text-lg md:text-xl font-light tracking-wide max-w-md opacity-0"
+            className="text-lg md:text-xl font-light tracking-wide max-w-md opacity-0 text-black"
           >
             Born in The Ends. Built for the streets.
             <br />

@@ -60,10 +60,10 @@ export default function Chapter02Ends() {
         style={{ clipPath: 'circle(0% at 50% 50%)' }}
       >
         <Image
-          src="https://images.unsplash.com/photo-1517706354898-d8995a5c68de?q=80&w=2669&auto=format&fit=crop"
-          alt="London Concrete"
+          src="https://uk.trapstarlondon.com/cdn/shop/files/Tri.jpg?v=1768768049&width=1200"
+          alt="Trapstar London"
           fill
-          className="object-cover opacity-60 grayscale"
+          className="object-cover opacity-60"
         />
       </div>
       <div className="z-10 container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">

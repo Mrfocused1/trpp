@@ -65,7 +65,7 @@ export default function Chapter01Stamp() {
             className="font-display text-[15vw] leading-none font-bold tracking-tighter text-transparent"
             style={{ WebkitTextStroke: '2px white', opacity: 0 }}
           >
-            100
+            TRAPSTAR
           </div>
         </div>
         <p

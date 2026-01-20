@@ -1,0 +1,84 @@
+{
+  "testName": "Chapter11Shop Mobile Horizontal Scroll Test",
+  "timestamp": "2026-01-20T04:37:20.416Z",
+  "url": "http://localhost:3002",
+  "viewport": {
+    "width": 375,
+    "height": 667
+  },
+  "tests": [
+    {
+      "name": "Chapter11Shop section exists",
+      "passed": true,
+      "details": "Section found with id=\"ch11\""
+    },
+    {
+      "name": "Horizontal scroll container configured",
+      "passed": true,
+      "details": {
+        "exists": true,
+        "overflowX": "auto",
+        "scrollWidth": 1500,
+        "clientWidth": 375,
+        "hasScroll": true,
+        "dataLenisPreventTouch": "true",
+        "touchAction": "pan-x pan-y"
+      }
+    },
+    {
+      "name": "Product cards present",
+      "passed": true,
+      "details": "Found 4 product cards (expected 4)"
+    },
+    {
+      "name": "Horizontal scroll works",
+      "passed": true,
+      "details": {
+        "success": true,
+        "initialScrollLeft": 0,
+        "scrollLeftAfter": 375,
+        "scrolled": true
+      }
+    },
+    {
+      "name": "Lenis prevention attributes present",
+      "passed": true,
+      "details": {
+        "sectionHasDataLenisPrevent": true,
+        "wrapperHasDataLenisPreventTouch": true
+      }
+    },
+    {
+      "name": "Touch action styles configured",
+      "passed": true,
+      "details": {
+        "touchAction": "pan-x pan-y",
+        "overscrollBehaviorX": "contain"
+      }
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "Initial view",
+      "path": "/Users/paulbridges/1hundred/scratchpad/screenshot-ch11-initial.png"
+    },
+    {
+      "name": "After scroll",
+      "path": "/Users/paulbridges/1hundred/scratchpad/screenshot-ch11-scrolled.png"
+    },
+    {
+      "name": "Second product",
+      "path": "/Users/paulbridges/1hundred/scratchpad/screenshot-ch11-product2.png"
+    },
+    {
+      "name": "Third product",
+      "path": "/Users/paulbridges/1hundred/scratchpad/screenshot-ch11-product3.png"
+    },
+    {
+      "name": "Fourth product",
+      "path": "/Users/paulbridges/1hundred/scratchpad/screenshot-ch11-product4.png"
+    }
+  ],
+  "success": true,
+  "summary": "6/6 tests passed"
+}

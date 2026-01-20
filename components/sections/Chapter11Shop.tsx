@@ -109,7 +109,7 @@ export default function Chapter11Shop() {
     >
       <div
         ref={wrapperRef}
-        className="horiz-gallery-wrapper h-screen overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none"
+        className="horiz-gallery-wrapper h-screen overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none pl-[7.5vw] md:pl-0"
         data-lenis-prevent-touch
         style={{
           WebkitOverflowScrolling: 'touch',
@@ -119,12 +119,12 @@ export default function Chapter11Shop() {
       >
         <div
           ref={stripRef}
-          className="horiz-gallery-strip flex flex-nowrap will-change-transform w-[400vw]"
+          className="horiz-gallery-strip flex flex-nowrap will-change-transform gap-4 md:gap-0"
         >
           {products.map((product) => (
             <div
               key={product.id}
-              className="product-card w-screen min-w-screen h-screen flex-shrink-0 flex items-center justify-center p-8 md:p-20 snap-start"
+              className="product-card w-[85vw] md:w-screen min-w-[85vw] md:min-w-screen h-screen flex-shrink-0 flex items-center justify-center p-8 md:p-20 snap-start"
             >
               <div className="w-full max-w-4xl grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                 {/* Product Image */}

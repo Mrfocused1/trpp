@@ -137,7 +137,7 @@ export default function Chapter02Ends() {
           }}
           className="mt-8 opacity-0"
         >
-          <button className="cursor-hover bg-hundred-red text-white font-display text-xl px-8 py-4 hover:bg-black transition-colors duration-300">
+          <button className="cursor-hover bg-hundred-red text-white font-display text-sm px-6 py-2 hover:bg-black transition-colors duration-300">
             SHOP
           </button>
         </div>

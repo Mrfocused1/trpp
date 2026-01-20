@@ -103,10 +103,15 @@ export default function Chapter11Shop() {
   return (
     <section
       id="ch11"
-      className="bg-white text-black min-h-screen overflow-x-auto md:overflow-hidden"
+      className="bg-white text-black min-h-screen overflow-x-auto md:overflow-hidden relative"
       data-title="SHOP"
       data-lenis-prevent
     >
+      <div className="absolute top-8 left-8 md:top-12 md:left-12 z-10">
+        <h2 className="font-display text-4xl md:text-6xl font-bold tracking-tighter">
+          BROWSE PRODUCTS
+        </h2>
+      </div>
       <div
         ref={wrapperRef}
         className="horiz-gallery-wrapper h-screen overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none pl-[7.5vw] md:pl-0"

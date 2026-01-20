@@ -43,12 +43,13 @@ export default function Chapter06Archive() {
           (panel as HTMLElement).style.scrollSnapAlign = 'start';
         });
       } else {
-        // On desktop, use ScrollTrigger animation WITHOUT pinning
-        // Animation happens across the full height of the section
+        // On desktop, use ScrollTrigger WITH pinning
+        // Pin the section and scroll through all 4 panels
         scrollTriggerInstance = ScrollTrigger.create({
           trigger: wrapper,
           start: 'top top',
-          end: 'bottom top',
+          end: () => `+=${scrollDistance * 1.5}`,
+          pin: true,
           scrub: 1,
           id: 'archive-horizontal-scroll',
           onUpdate: (self) => {
@@ -77,15 +78,14 @@ export default function Chapter06Archive() {
     <section
       ref={wrapperRef}
       id="ch06-wrapper"
-      className="bg-white text-black overflow-hidden h-screen md:h-[500vh]"
+      className="bg-white text-black overflow-hidden h-screen"
       data-title="ARCHIVE"
     >
-      <div className="sticky top-0 h-screen">
-        <div
-          ref={containerRef}
-          id="ch06-container"
-          className="flex h-screen w-[400vw]"
-        >
+      <div
+        ref={containerRef}
+        id="ch06-container"
+        className="flex h-screen w-[400vw]"
+      >
         {/* Panel 1 */}
         <div className="w-screen h-full flex items-center justify-center border-r border-black/10 relative">
           <div className="text-center">
@@ -129,7 +129,6 @@ export default function Chapter06Archive() {
             </p>
           </div>
         </div>
-      </div>
       </div>
     </section>
   );

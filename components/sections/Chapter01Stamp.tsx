@@ -76,24 +76,30 @@ export default function Chapter01Stamp() {
         trigger: '#ch01',
         start: 'top top',
         end: isMobile ? '+=100%' : '+=150%',
-        scrub: 1,
+        scrub: 0.5,
         pin: true,
       },
     });
 
-    // Play video based on scroll (0 to 0.4 of timeline)
+    // Play video based on scroll (0 to 0.5 of timeline for smoother playback)
     tl.to(video, {
       currentTime: video.duration || 3,
-      duration: 0.4,
+      duration: 0.5,
       ease: 'none',
+      onUpdate: function() {
+        // Force the video to update its display
+        if (video.paused) {
+          video.play().then(() => video.pause()).catch(() => {});
+        }
+      }
     })
-      // Fade out and scale video container (0.4 to 0.5)
-      .to(videoContainer, { opacity: 0, scale: 1.2, duration: 0.1 }, 0.4)
-      // Fade in content (0.5 to 0.6)
-      .to(content, { opacity: 1, duration: 0.1 }, 0.5)
-      // Flicker effect on logo (0.6 to 0.65)
-      .to(logo, { opacity: 1, duration: 0.05 }, 0.6)
-      // Slam solid (0.65 to 0.7)
+      // Fade out and scale video container (0.5 to 0.6)
+      .to(videoContainer, { opacity: 0, scale: 1.2, duration: 0.1 }, 0.5)
+      // Fade in content (0.6 to 0.7)
+      .to(content, { opacity: 1, duration: 0.1 }, 0.6)
+      // Flicker effect on logo (0.7 to 0.75)
+      .to(logo, { opacity: 1, duration: 0.05 }, 0.7)
+      // Slam solid (0.75 to 0.8)
       .to(
         logo,
         {
@@ -102,14 +108,14 @@ export default function Chapter01Stamp() {
           scale: 1.05,
           ease: 'elastic.out(1, 0.3)',
         },
-        0.65
+        0.75
       )
-      // Line animation (0.7 to 1)
+      // Line animation (0.8 to 1)
       .fromTo(
         line,
         { strokeDasharray: 1000, strokeDashoffset: 1000 },
-        { strokeDashoffset: 0, duration: 0.3, ease: 'power2.inOut' },
-        0.7
+        { strokeDashoffset: 0, duration: 0.2, ease: 'power2.inOut' },
+        0.8
       );
 
     // Separate looping animation for scroll indicator

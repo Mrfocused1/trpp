@@ -74,12 +74,14 @@ export default function Chapter06Archive() {
       id="ch06-wrapper"
       className="bg-white text-black overflow-x-auto md:overflow-hidden h-screen snap-x snap-mandatory md:snap-none"
       data-title="ARCHIVE"
+      data-lenis-prevent
       style={{ WebkitOverflowScrolling: 'touch' }}
     >
       <div
         ref={containerRef}
         id="ch06-container"
         className="flex h-screen w-[400vw] md:w-[400vw]"
+        data-lenis-prevent
       >
         {/* Panel 1 */}
         <div className="w-screen h-full flex items-center justify-center border-r border-black/10 relative snap-start">

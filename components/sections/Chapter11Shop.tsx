@@ -34,11 +34,11 @@ export default function Chapter11Shop() {
         {/* Product Details */}
         <div className="space-y-8">
           <div>
-            <h2 className="font-display text-6xl md:text-7xl font-bold tracking-tighter">
-              CORE HOODIE
+            <h2 className="font-display text-5xl md:text-6xl font-bold tracking-tighter leading-tight">
+              TRAPSTAR IRONGATE HOODED PUFFER JACKET
             </h2>
-            <p className="font-mono text-gray-500">V1.0 / CHARCOAL</p>
-            <p className="font-display text-4xl mt-2 font-bold">£85.00</p>
+            <p className="font-mono text-gray-500">IRONGATE / BLACK</p>
+            <p className="font-display text-4xl mt-2 font-bold">£250</p>
           </div>
 
           <div className="space-y-4">

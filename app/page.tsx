@@ -28,10 +28,10 @@ export default function Home() {
         <div id="smooth-content">
           <Chapter01Stamp />
           <Chapter02Ends />
+          <Chapter11Shop />
           <Chapter03Code />
           <Chapter04Route />
           <Chapter05Sound />
-          <Chapter11Shop />
           <Chapter12SignOff />
         </div>
       </main>

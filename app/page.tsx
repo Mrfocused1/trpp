@@ -35,8 +35,8 @@ export default function Home() {
           <Chapter04Route />
           <Chapter05Sound />
           <Chapter06Archive />
-          <Chapter08Craft />
           <Chapter10Drop />
+          <Chapter08Craft />
           <Chapter11Shop />
           <Chapter12SignOff />
         </div>

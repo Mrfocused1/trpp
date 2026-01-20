@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
@@ -18,6 +18,17 @@ export default function Chapter01Stamp() {
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
   const hasInteractedRef = useRef(false);
 
+  // Refs for smooth video playback
+  const targetTimeRef = useRef(0);
+  const currentTimeRef = useRef(0);
+  const rafIdRef = useRef<number | null>(null);
+  const isVideoReadyRef = useRef(false);
+
+  // Lerp function for smooth interpolation
+  const lerp = useCallback((start: number, end: number, factor: number) => {
+    return start + (end - start) * factor;
+  }, []);
+
   useEffect(() => {
     const logo = logoRef.current;
     const line = lineRef.current;
@@ -31,66 +42,108 @@ export default function Chapter01Stamp() {
     // Mobile detection
     const isMobile = window.innerWidth < 768;
 
-    // Ensure video is loaded and ready
-    const loadVideo = () => {
-      if (video.readyState >= 2) {
-        // Video has loaded enough to start
-        video.pause();
-        video.currentTime = 0;
-      } else {
-        // Wait for video to load
-        video.addEventListener('loadeddata', () => {
-          video.pause();
-          video.currentTime = 0;
-        }, { once: true });
+    // Smooth video time update using requestAnimationFrame with lerp
+    const updateVideoTime = () => {
+      if (!video || !isVideoReadyRef.current) {
+        rafIdRef.current = requestAnimationFrame(updateVideoTime);
+        return;
       }
+
+      // Lerp factor - higher = more responsive, lower = smoother
+      // 0.1 provides very smooth interpolation
+      const lerpFactor = 0.1;
+
+      // Smoothly interpolate current time towards target
+      currentTimeRef.current = lerp(
+        currentTimeRef.current,
+        targetTimeRef.current,
+        lerpFactor
+      );
+
+      // Only update video if the difference is significant (avoid micro-updates)
+      const timeDiff = Math.abs(video.currentTime - currentTimeRef.current);
+      if (timeDiff > 0.01) {
+        // Clamp to valid range
+        const clampedTime = Math.max(0, Math.min(currentTimeRef.current, video.duration || 0));
+        video.currentTime = clampedTime;
+      }
+
+      rafIdRef.current = requestAnimationFrame(updateVideoTime);
     };
 
-    loadVideo();
+    // Start the animation loop
+    rafIdRef.current = requestAnimationFrame(updateVideoTime);
+
+    // Ensure video is loaded and ready
+    const onVideoReady = () => {
+      video.pause();
+      video.currentTime = 0;
+      currentTimeRef.current = 0;
+      targetTimeRef.current = 0;
+      isVideoReadyRef.current = true;
+      ScrollTrigger.refresh();
+    };
+
+    if (video.readyState >= 3) {
+      // HAVE_FUTURE_DATA or better
+      onVideoReady();
+    } else {
+      video.addEventListener('canplay', onVideoReady, { once: true });
+    }
 
     // iOS requires user interaction to enable video
     const enableVideoOnInteraction = () => {
       if (!hasInteractedRef.current && isMobile) {
         hasInteractedRef.current = true;
-        video.load();
-        video.play().then(() => {
-          video.pause();
-          video.currentTime = 0;
-        }).catch(() => {
-          // Video autoplay blocked, will work with scroll
-        });
+        // Create a short play to unlock video on iOS
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            video.pause();
+            video.currentTime = 0;
+            isVideoReadyRef.current = true;
+          }).catch(() => {
+            // Video autoplay blocked, will work with scroll after interaction
+            isVideoReadyRef.current = true;
+          });
+        }
       }
     };
 
     // Add interaction listeners for iOS
     if (isMobile) {
-      document.addEventListener('touchstart', enableVideoOnInteraction, { once: true });
+      document.addEventListener('touchstart', enableVideoOnInteraction, { once: true, passive: true });
       document.addEventListener('click', enableVideoOnInteraction, { once: true });
     }
 
     // Ensure video is visible initially
     gsap.set(videoContainer, { opacity: 1, scale: 1 });
 
+    // Get video duration with fallback
+    const getVideoDuration = () => video.duration || 10.8;
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '#ch01',
         start: 'top top',
         end: isMobile ? '+=100%' : '+=150%',
-        scrub: 0.5,
+        // Higher scrub value for smoother interpolation with Lenis
+        scrub: 1.5,
         pin: true,
       },
     });
 
-    // Play video based on scroll (0 to 0.5 of timeline for smoother playback)
-    tl.to(video, {
-      currentTime: video.duration || 3,
+    // Create a proxy object for GSAP to animate
+    const videoProgress = { value: 0 };
+
+    // Animate video progress based on scroll (0 to 0.5 of timeline)
+    tl.to(videoProgress, {
+      value: 1,
       duration: 0.5,
       ease: 'none',
-      onUpdate: function() {
-        // Force the video to update its display
-        if (video.paused) {
-          video.play().then(() => video.pause()).catch(() => {});
-        }
+      onUpdate: () => {
+        // Set target time - the RAF loop will smoothly interpolate to this
+        targetTimeRef.current = videoProgress.value * getVideoDuration();
       }
     })
       // Fade out and scale video container (0.5 to 0.6)
@@ -127,12 +180,11 @@ export default function Chapter01Stamp() {
       yoyo: true,
     });
 
-    // Load video metadata
-    video.addEventListener('loadedmetadata', () => {
-      ScrollTrigger.refresh();
-    });
-
     return () => {
+      // Cancel animation frame
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
       tl.kill();
       if (tl.scrollTrigger) {
         tl.scrollTrigger.kill();
@@ -141,8 +193,9 @@ export default function Chapter01Stamp() {
         document.removeEventListener('touchstart', enableVideoOnInteraction);
         document.removeEventListener('click', enableVideoOnInteraction);
       }
+      video.removeEventListener('canplay', onVideoReady);
     };
-  }, []);
+  }, [lerp]);
 
   return (
     <section
@@ -160,10 +213,15 @@ export default function Chapter01Stamp() {
           className="w-full h-full object-cover"
           muted
           playsInline
-          preload="metadata"
+          preload="auto"
           poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+          style={{
+            // Force GPU acceleration for smoother rendering
+            transform: 'translateZ(0)',
+            willChange: 'contents'
+          }}
         >
-          <source src="/images/trap-intro.mp4" type="video/mp4" />
+          <source src="/images/trap-intro-optimized.mp4" type="video/mp4" />
         </video>
       </div>
 

@@ -131,16 +131,6 @@ export default function Chapter02Ends() {
             TRAPSTAR
           </h1>
         </div>
-        <div
-          ref={(el) => {
-            textReveals.current[0] = el;
-          }}
-          className="mt-8 opacity-0"
-        >
-          <button className="cursor-hover bg-hundred-red text-white font-display text-sm px-6 py-2 hover:bg-black transition-colors duration-300">
-            SHOP
-          </button>
-        </div>
       </div>
 
       {/* Signature SVG */}

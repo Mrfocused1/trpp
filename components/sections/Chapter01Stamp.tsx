@@ -57,12 +57,12 @@ export default function Chapter01Stamp() {
           priority
         />
       </div>
-      <div className="z-10 text-center relative">
+      <div className="z-10 text-center relative px-4">
         {/* Glitchy Logo */}
-        <div className="overflow-hidden mb-6">
+        <div className="mb-6">
           <div
             ref={logoRef}
-            className="font-display text-[15vw] leading-none font-bold tracking-tighter text-transparent"
+            className="font-display text-[12vw] md:text-[10vw] leading-tight font-bold tracking-tighter text-transparent"
             style={{ WebkitTextStroke: '2px white', opacity: 0 }}
           >
             TRAPSTAR

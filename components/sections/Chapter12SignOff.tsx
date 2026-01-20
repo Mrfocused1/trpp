@@ -52,7 +52,7 @@ export default function Chapter12SignOff() {
           ref={logoRef}
           className="opacity-0 flex items-center justify-center"
         >
-          <div className="relative w-48 h-16 md:w-64 md:h-20">
+          <div className="relative w-96 h-32 md:w-[32rem] md:h-40">
             <Image
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHGoqE8W0VyW9wSDsDhU9JgoFaZcKLzwaExw&s"
               alt="Trapstar Logo"

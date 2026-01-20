@@ -69,7 +69,7 @@ export default function HUD({ totalChapters }: HUDProps) {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-start mix-blend-difference text-white">
       <div className="flex flex-col">
-        <div className="relative w-24 h-8 mb-1">
+        <div className="relative w-24 h-8">
           <Image
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHGoqE8W0VyW9wSDsDhU9JgoFaZcKLzwaExw&s"
             alt="Trapstar Logo"
@@ -78,19 +78,10 @@ export default function HUD({ totalChapters }: HUDProps) {
             priority
           />
         </div>
-        <div className="text-xs tracking-widest mt-1 opacity-70">
-          {String(currentChapter.index + 1).padStart(2, '0')} — {currentChapter.title}
-        </div>
       </div>
 
       <div className="flex flex-col items-end">
         <div className="flex items-center gap-4">
-          <a
-            href="#"
-            className="cursor-hover text-sm font-medium tracking-wide hover:text-hundred-red transition-colors hidden md:block"
-          >
-            WATCH FILM
-          </a>
           <a
             href="#join"
             className={`cursor-hover text-sm font-medium tracking-wide hover:text-hundred-red transition-all duration-500 ${

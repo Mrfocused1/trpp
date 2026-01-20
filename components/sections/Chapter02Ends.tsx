@@ -113,7 +113,7 @@ export default function Chapter02Ends() {
         <div className="overflow-hidden">
           <h1
             ref={titleRef}
-            className="font-display text-[15vw] md:text-[8vw] leading-[0.85] tracking-tighter text-hundred-dark"
+            className="font-display text-[15vw] md:text-[8vw] leading-[0.85] tracking-tighter text-white md:text-hundred-dark"
           >
             TRAPSTAR
           </h1>
@@ -123,7 +123,7 @@ export default function Chapter02Ends() {
             ref={(el) => {
               textReveals.current[0] = el;
             }}
-            className="text-lg md:text-xl font-light tracking-wide max-w-md opacity-0 text-black"
+            className="text-lg md:text-xl font-light tracking-wide max-w-md opacity-0 text-white md:text-black"
           >
             Born in The Ends. Built for the streets.
             <br />

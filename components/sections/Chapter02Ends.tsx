@@ -131,30 +131,14 @@ export default function Chapter02Ends() {
             TRAPSTAR
           </h1>
         </div>
-        <div className="overflow-hidden mt-4">
-          <p
-            ref={(el) => {
-              textReveals.current[0] = el;
-            }}
-            className="text-lg md:text-xl font-light tracking-wide max-w-md opacity-0 text-white md:text-black"
-          >
-            Born in The Ends. Built for the streets.
-            <br />
-            London&apos;s finest since day one.
-          </p>
-        </div>
-
         <div
           ref={(el) => {
-            textReveals.current[1] = el;
+            textReveals.current[0] = el;
           }}
-          className="flex gap-8 mt-12 opacity-0"
+          className="mt-8 opacity-0"
         >
-          <button className="cursor-hover font-medium border-b border-hundred-dark pb-1 hover:text-hundred-red hover:border-hundred-red transition-all">
-            Shop New In
-          </button>
-          <button className="cursor-hover font-medium text-gray-500 hover:text-hundred-dark transition-colors">
-            View Collection
+          <button className="cursor-hover bg-hundred-red text-white font-display text-xl px-8 py-4 hover:bg-black transition-colors duration-300">
+            SHOP
           </button>
         </div>
       </div>

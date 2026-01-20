@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Image from 'next/image';
@@ -10,53 +10,73 @@ if (typeof window !== 'undefined') {
 }
 
 export default function Chapter06Archive() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
-    let ctx: gsap.Context | null = null;
+    const wrapper = wrapperRef.current;
+    const container = containerRef.current;
 
-    // Small delay to ensure DOM is fully rendered
-    const timer = setTimeout(() => {
-      ctx = gsap.context(() => {
-        if (window.innerWidth > 768) {
-          const horizontalSections = gsap.utils.toArray('#ch06-container > div');
+    if (!wrapper || !container) return;
 
-          if (horizontalSections.length > 0) {
-            gsap.to(horizontalSections, {
-              xPercent: -100 * (horizontalSections.length - 1),
-              ease: 'none',
-              scrollTrigger: {
-                trigger: '#ch06-wrapper',
-                pin: true,
-                scrub: 1,
-                snap: 1 / (horizontalSections.length - 1),
-                end: () => `+=${horizontalSections.length * 1000}`,
-                id: 'archive-horizontal',
-                invalidateOnRefresh: true,
-              },
-            });
+    let scrollTriggerInstance: ScrollTrigger | null = null;
 
-            // Refresh ScrollTrigger after setup
-            ScrollTrigger.refresh();
-          }
-        }
+    const setupAnimation = () => {
+      // Only run on desktop
+      if (window.innerWidth <= 768) return;
+
+      const panels = gsap.utils.toArray<HTMLElement>('#ch06-container > div');
+
+      if (panels.length === 0) {
+        console.warn('No panels found for archive horizontal scroll');
+        return;
+      }
+
+      // Calculate total scroll distance
+      const totalWidth = container.scrollWidth;
+      const viewportWidth = window.innerWidth;
+      const scrollDistance = totalWidth - viewportWidth;
+
+      scrollTriggerInstance = ScrollTrigger.create({
+        trigger: wrapper,
+        start: 'top top',
+        end: () => `+=${scrollDistance}`,
+        pin: true,
+        scrub: 1,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          gsap.to(container, {
+            x: -scrollDistance * self.progress,
+            duration: 0,
+            overwrite: 'auto',
+          });
+        },
       });
-    }, 100);
+    };
+
+    // Setup with a small delay to ensure DOM is ready
+    const timer = setTimeout(setupAnimation, 200);
 
     return () => {
       clearTimeout(timer);
-      if (ctx) {
-        ctx.revert();
+      if (scrollTriggerInstance) {
+        scrollTriggerInstance.kill();
       }
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.vars.id === 'archive-horizontal') {
-          trigger.kill();
-        }
-      });
     };
   }, []);
 
   return (
-    <section id="ch06-wrapper" className="bg-white text-black overflow-hidden" data-title="ARCHIVE">
-      <div id="ch06-container" className="flex h-screen w-[400vw] md:w-[400vw]">
+    <section
+      ref={wrapperRef}
+      id="ch06-wrapper"
+      className="chapter-section bg-white text-black overflow-hidden"
+      data-title="ARCHIVE"
+    >
+      <div
+        ref={containerRef}
+        id="ch06-container"
+        className="flex h-screen w-[400vw]"
+      >
         {/* Panel 1 */}
         <div className="w-screen h-full flex items-center justify-center border-r border-black/10 relative">
           <div className="text-center">

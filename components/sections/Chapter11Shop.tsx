@@ -50,7 +50,8 @@ export default function Chapter11Shop() {
 
     if (!wrapper || !strip) return;
 
-    const isMobile = window.innerWidth <= 768;
+    // Feature detection: check for touch capability and small viewport
+    const isMobile = 'ontouchstart' in window && window.innerWidth <= 768;
 
     if (isMobile) {
       // On mobile, enable native horizontal scroll
@@ -102,23 +103,28 @@ export default function Chapter11Shop() {
   return (
     <section
       id="ch11"
-      className="chapter-section bg-white text-black overflow-hidden"
+      className="bg-white text-black min-h-screen overflow-x-auto md:overflow-hidden"
       data-title="SHOP"
+      data-lenis-prevent
     >
       <div
         ref={wrapperRef}
-        className="horiz-gallery-wrapper overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none"
-        data-lenis-prevent
-        style={{ WebkitOverflowScrolling: 'touch' }}
+        className="horiz-gallery-wrapper h-screen overflow-x-auto md:overflow-hidden snap-x snap-mandatory md:snap-none"
+        data-lenis-prevent-touch
+        style={{
+          WebkitOverflowScrolling: 'touch',
+          touchAction: 'pan-x pan-y',
+          overscrollBehaviorX: 'contain'
+        }}
       >
         <div
           ref={stripRef}
-          className="horiz-gallery-strip flex flex-nowrap will-change-transform"
+          className="horiz-gallery-strip flex flex-nowrap will-change-transform w-[400vw]"
         >
           {products.map((product) => (
             <div
               key={product.id}
-              className="product-card w-screen h-screen flex-shrink-0 flex items-center justify-center p-8 md:p-20 snap-start"
+              className="product-card w-screen min-w-screen h-screen flex-shrink-0 flex items-center justify-center p-8 md:p-20 snap-start"
             >
               <div className="w-full max-w-4xl grid md:grid-cols-2 gap-8 md:gap-12 items-center">
                 {/* Product Image */}

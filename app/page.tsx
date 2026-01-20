@@ -11,7 +11,6 @@ import Chapter02Ends from '@/components/sections/Chapter02Ends';
 import Chapter03Code from '@/components/sections/Chapter03Code';
 import Chapter04Route from '@/components/sections/Chapter04Route';
 import Chapter05Sound from '@/components/sections/Chapter05Sound';
-import Chapter06Archive from '@/components/sections/Chapter06Archive';
 import Chapter11Shop from '@/components/sections/Chapter11Shop';
 import Chapter12SignOff from '@/components/sections/Chapter12SignOff';
 
@@ -32,7 +31,6 @@ export default function Home() {
           <Chapter03Code />
           <Chapter04Route />
           <Chapter05Sound />
-          <Chapter06Archive />
           <Chapter11Shop />
           <Chapter12SignOff />
         </div>

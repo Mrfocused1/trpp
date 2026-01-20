@@ -10,38 +10,57 @@ if (typeof window !== 'undefined') {
 }
 
 export default function Chapter02Ends() {
-  const maskRef = useRef<HTMLDivElement>(null);
-  const revealRefs = useRef<(HTMLElement | null)[]>([]);
+  const gridRef = useRef<SVGRectElement>(null);
+  const imgContainerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const textReveals = useRef<(HTMLElement | null)[]>([]);
+  const sigPathRef = useRef<SVGPathElement>(null);
 
   useEffect(() => {
-    const mask = maskRef.current;
-    if (!mask) return;
+    const grid = gridRef.current;
+    const imgContainer = imgContainerRef.current;
+    const title = titleRef.current;
+    const sigPath = sigPathRef.current;
 
-    // Mask reveal animation
-    gsap.to(mask, {
-      clipPath: 'circle(100% at 50% 50%)',
+    if (!grid || !imgContainer || !title || !sigPath) return;
+
+    const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '#ch02',
-        start: 'top center',
-        end: 'center center',
-        scrub: 1,
+        start: 'top 70%',
+        toggleActions: 'play none none none',
       },
     });
 
-    // Text reveal animations
-    revealRefs.current.forEach((el, i) => {
-      if (!el) return;
-      gsap.to(el, {
+    // 1. Grid draws
+    tl.from(grid, { opacity: 0, duration: 1 })
+      // 2. Image Reveal (Clip Path)
+      .from(imgContainer, {
+        clipPath: 'inset(0 100% 0 0)',
+        duration: 1.5,
+        ease: 'power3.inOut',
+      }, '-=0.5')
+      // 3. Title reveal
+      .from(title, {
+        yPercent: 100,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'power3.out',
+      }, '-=1')
+      // 4. Text reveals
+      .to(textReveals.current.filter(Boolean), {
         opacity: 1,
         y: 0,
-        duration: 1,
-        delay: i * 0.2,
-        scrollTrigger: {
-          trigger: '#ch02',
-          start: 'top 70%',
-        },
-      });
-    });
+        stagger: 0.1,
+        duration: 0.8,
+      }, '-=0.5')
+      // 5. Signature Draw
+      .from(sigPath, {
+        strokeDasharray: 300,
+        strokeDashoffset: 300,
+        duration: 2,
+        ease: 'power2.out',
+      }, '-=1');
 
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -51,44 +70,95 @@ export default function Chapter02Ends() {
   return (
     <section
       id="ch02"
-      className="chapter-section flex items-center justify-center bg-hundred-charcoal"
+      className="chapter-section relative h-screen w-full overflow-hidden flex flex-col justify-end p-6 md:p-12 pt-32 bg-hundred-bg"
       data-title="THE ENDS"
     >
-      <div
-        ref={maskRef}
-        className="absolute inset-0 z-0 bg-hundred-black flex items-center justify-center overflow-hidden"
-        style={{ clipPath: 'circle(0% at 50% 50%)' }}
-      >
-        <Image
-          src="https://uk.trapstarlondon.com/cdn/shop/files/Tri.jpg?v=1768768049&width=1200"
-          alt="Trapstar London"
-          fill
-          className="object-cover opacity-60"
-        />
+      {/* Background SVG Grid */}
+      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid-ch02" width="100" height="100" patternUnits="userSpaceOnUse">
+              <path d="M 100 0 L 0 0 0 100" fill="none" stroke="currentColor" strokeWidth="1" />
+            </pattern>
+          </defs>
+          <rect
+            ref={gridRef}
+            width="100%"
+            height="100%"
+            fill="url(#grid-ch02)"
+            className="stroke-hundred-dark"
+          />
+        </svg>
       </div>
-      <div className="z-10 container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-        <div className="hidden md:block"></div>
-        <div className="max-w-xl">
-          <h2
-            ref={(el) => {
-              revealRefs.current[0] = el;
-            }}
-            className="font-display text-6xl md:text-8xl font-bold uppercase mb-6 tracking-tighter translate-y-10 opacity-0"
+
+      {/* Hero Image */}
+      <div className="absolute top-0 right-0 w-full md:w-[60vw] h-full z-0">
+        <div ref={imgContainerRef} className="w-full h-full relative">
+          <Image
+            src="https://uk.trapstarlondon.com/cdn/shop/files/Tri.jpg?v=1768768049&width=1200"
+            alt="Trapstar London"
+            fill
+            className="object-cover"
+            priority
+          />
+          <div className="absolute inset-0 bg-hundred-bg opacity-10"></div>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="relative z-10 max-w-2xl">
+        <div className="overflow-hidden">
+          <h1
+            ref={titleRef}
+            className="font-display text-[15vw] md:text-[8vw] leading-[0.85] tracking-tighter text-hundred-dark"
           >
-            Born in
-            <br />
-            <span className="text-hundred-red">The Ends.</span>
-          </h2>
+            TRAPSTAR
+          </h1>
+        </div>
+        <div className="overflow-hidden mt-4">
           <p
             ref={(el) => {
-              revealRefs.current[1] = el;
+              textReveals.current[0] = el;
             }}
-            className="text-lg md:text-xl text-gray-400 font-light leading-relaxed translate-y-10 opacity-0"
+            className="text-lg md:text-xl font-light tracking-wide max-w-md opacity-0"
           >
-            We don&apos;t sell hype. We build heritage. Forged in the concrete
-            valleys of London, defined by the late nights and the early starts.
+            Born in The Ends. Built for the streets.
+            <br />
+            London&apos;s finest since day one.
           </p>
         </div>
+
+        <div
+          ref={(el) => {
+            textReveals.current[1] = el;
+          }}
+          className="flex gap-8 mt-12 opacity-0"
+        >
+          <button className="cursor-hover font-medium border-b border-hundred-dark pb-1 hover:text-hundred-red hover:border-hundred-red transition-all">
+            Shop New In
+          </button>
+          <button className="cursor-hover font-medium text-gray-500 hover:text-hundred-dark transition-colors">
+            View Collection
+          </button>
+        </div>
+      </div>
+
+      {/* Signature SVG */}
+      <div className="absolute bottom-12 right-12 w-32 h-32 z-20 hidden md:block">
+        <svg
+          viewBox="0 0 100 100"
+          className="w-full h-full stroke-hundred-dark fill-none"
+          strokeWidth="2"
+        >
+          <path
+            ref={sigPathRef}
+            d="M10,90 Q30,10 50,50 T90,90"
+            strokeLinecap="round"
+          />
+          <text x="60" y="30" className="font-sans text-[10px] fill-current stroke-none">
+            EST. 2024
+          </text>
+        </svg>
       </div>
     </section>
   );

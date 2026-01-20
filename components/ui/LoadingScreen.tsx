@@ -30,7 +30,7 @@ export default function LoadingScreen() {
   return (
     <div id="loader" ref={loaderRef}>
       <div className="font-display text-4xl font-bold animate-pulse tracking-tighter">
-        LOADING ASSETS...
+        LOADING THE TRAP
       </div>
     </div>
   );

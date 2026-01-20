@@ -22,7 +22,19 @@ export default function HUD({ totalChapters }: HUDProps) {
   const stampRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const chapters = document.querySelectorAll('.chapter-section, #ch06-wrapper');
+    const chapters = document.querySelectorAll('.chapter-section, #ch06-wrapper, #ch11');
+
+    // Update progress based on actual scroll position
+    const updateScrollProgress = () => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = window.scrollY;
+      const percent = (scrolled / scrollHeight) * 100;
+      setProgress(Math.min(100, Math.max(0, percent)));
+    };
+
+    // Listen to scroll events for progress bar
+    window.addEventListener('scroll', updateScrollProgress);
+    updateScrollProgress(); // Initial calculation
 
     chapters.forEach((section, index) => {
       ScrollTrigger.create({
@@ -38,9 +50,6 @@ export default function HUD({ totalChapters }: HUDProps) {
       const title = section.getAttribute('data-title') || 'CHAPTER';
       setCurrentChapter({ index, title });
 
-      const percent = ((index + 1) / totalChapters) * 100;
-      setProgress(percent);
-
       // Pulse stamp animation
       if (stampRef.current) {
         gsap.fromTo(
@@ -51,11 +60,12 @@ export default function HUD({ totalChapters }: HUDProps) {
       }
 
       // Show CTAs based on chapter
-      setShowShop(index > 5);
-      setShowJoin(index > 7);
+      setShowShop(index > 2);
+      setShowJoin(index > 4);
     }
 
     return () => {
+      window.removeEventListener('scroll', updateScrollProgress);
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, [totalChapters]);

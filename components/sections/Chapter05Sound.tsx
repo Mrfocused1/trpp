@@ -16,23 +16,23 @@ export default function Chapter05Sound() {
     const waveform = waveformRef.current;
     if (!waveform) return;
 
-    gsap.fromTo(
-      waveform,
-      { strokeDasharray: 2000, strokeDashoffset: 2000 },
-      {
-        strokeDashoffset: 0,
-        scrollTrigger: {
-          trigger: '#ch05',
-          start: 'top center',
-          end: 'bottom center',
-          scrub: 1,
-        },
-      }
-    );
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        waveform,
+        { strokeDasharray: 2000, strokeDashoffset: 2000 },
+        {
+          strokeDashoffset: 0,
+          scrollTrigger: {
+            trigger: '#ch05',
+            start: 'top center',
+            end: 'bottom center',
+            scrub: 1,
+          },
+        }
+      );
+    });
 
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   return (

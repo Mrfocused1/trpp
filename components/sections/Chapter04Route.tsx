@@ -65,7 +65,10 @@ export default function Chapter04Route() {
     }, [], 0.9);
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      tl.kill();
+      if (tl.scrollTrigger) {
+        tl.scrollTrigger.kill();
+      }
     };
   }, []);
 

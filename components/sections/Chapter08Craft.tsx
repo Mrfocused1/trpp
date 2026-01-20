@@ -62,7 +62,10 @@ export default function Chapter08Craft() {
     tl.to('#spec-3', { opacity: 1, duration: 0.1 }, 0.8);
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      tl.kill();
+      if (tl.scrollTrigger) {
+        tl.scrollTrigger.kill();
+      }
     };
   }, []);
 

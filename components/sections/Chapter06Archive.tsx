@@ -11,24 +11,24 @@ if (typeof window !== 'undefined') {
 
 export default function Chapter06Archive() {
   useEffect(() => {
-    if (window.innerWidth > 768) {
-      const horizontalSections = gsap.utils.toArray('#ch06-container > div');
-      gsap.to(horizontalSections, {
-        xPercent: -100 * (horizontalSections.length - 1),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '#ch06-wrapper',
-          pin: true,
-          scrub: 1,
-          snap: 1 / (horizontalSections.length - 1),
-          end: '+=3000',
-        },
-      });
-    }
+    const ctx = gsap.context(() => {
+      if (window.innerWidth > 768) {
+        const horizontalSections = gsap.utils.toArray('#ch06-container > div');
+        gsap.to(horizontalSections, {
+          xPercent: -100 * (horizontalSections.length - 1),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#ch06-wrapper',
+            pin: true,
+            scrub: 1,
+            snap: 1 / (horizontalSections.length - 1),
+            end: '+=3000',
+          },
+        });
+      }
+    });
 
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   return (

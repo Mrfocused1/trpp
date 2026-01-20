@@ -16,19 +16,19 @@ const codeItems = [
 
 export default function Chapter03Code() {
   useEffect(() => {
-    gsap.from('.code-item', {
-      y: 50,
-      opacity: 0,
-      stagger: 0.2,
-      scrollTrigger: {
-        trigger: '#ch03',
-        start: 'top 60%',
-      },
+    const ctx = gsap.context(() => {
+      gsap.from('.code-item', {
+        y: 50,
+        opacity: 0,
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: '#ch03',
+          start: 'top 60%',
+        },
+      });
     });
 
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   return (

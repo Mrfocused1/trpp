@@ -19,32 +19,32 @@ export default function Chapter07Hoodie() {
 
     if (!reveal) return;
 
-    gsap.to(reveal, {
-      clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0% 100%)',
-      scrollTrigger: {
-        trigger: '#ch07',
-        start: 'top center',
-        end: 'center center',
-        scrub: 1,
-      },
-    });
-
-    if (shine) {
-      gsap.to(shine, {
-        x: '400%',
+    const ctx = gsap.context(() => {
+      gsap.to(reveal, {
+        clipPath: 'polygon(0 0, 100% 0, 100% 85%, 0% 100%)',
         scrollTrigger: {
           trigger: '#ch07',
-          start: 'center 60%',
-          toggleActions: 'play none none none',
+          start: 'top center',
+          end: 'center center',
+          scrub: 1,
         },
-        duration: 1.5,
-        ease: 'power2.inOut',
       });
-    }
 
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
+      if (shine) {
+        gsap.to(shine, {
+          x: '400%',
+          scrollTrigger: {
+            trigger: '#ch07',
+            start: 'center 60%',
+            toggleActions: 'play none none none',
+          },
+          duration: 1.5,
+          ease: 'power2.inOut',
+        });
+      }
+    });
+
+    return () => ctx.revert();
   }, []);
 
   return (

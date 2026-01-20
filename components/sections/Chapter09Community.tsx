@@ -29,15 +29,15 @@ const communityMembers = [
 
 export default function Chapter09Community() {
   useEffect(() => {
-    ScrollTrigger.batch('.community-card', {
-      start: 'top 80%',
-      onEnter: (batch) =>
-        gsap.to(batch, { opacity: 1, y: 0, stagger: 0.15, overwrite: true }),
+    const ctx = gsap.context(() => {
+      ScrollTrigger.batch('.community-card', {
+        start: 'top 80%',
+        onEnter: (batch) =>
+          gsap.to(batch, { opacity: 1, y: 0, stagger: 0.15, overwrite: true }),
+      });
     });
 
-    return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   return (

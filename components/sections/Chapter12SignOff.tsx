@@ -32,7 +32,10 @@ export default function Chapter12SignOff() {
     );
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      tl.kill();
+      if (tl.scrollTrigger) {
+        tl.scrollTrigger.kill();
+      }
     };
   }, []);
 

@@ -48,7 +48,7 @@ export default function Chapter06Archive() {
         scrollTriggerInstance = ScrollTrigger.create({
           trigger: wrapper,
           start: 'top top',
-          end: () => `+=${scrollDistance * 1.5}`,
+          end: () => `+=${scrollDistance * 3}`,
           pin: true,
           scrub: 1,
           id: 'archive-horizontal-scroll',

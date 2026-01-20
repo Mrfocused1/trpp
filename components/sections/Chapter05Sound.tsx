@@ -44,10 +44,11 @@ export default function Chapter05Sound() {
       <div className="absolute inset-0 w-full h-full md:h-full opacity-20">
         <div className="relative w-full h-full aspect-video md:aspect-auto">
           <iframe
-            src="https://www.youtube.com/embed/CzkIb_kEF_M?autoplay=1&mute=1&loop=1&playlist=CzkIb_kEF_M&controls=0&showinfo=0&rel=0&modestbranding=1"
-            className="absolute top-0 left-0 w-full h-full grayscale pointer-events-none"
-            allow="autoplay; encrypted-media"
-            style={{ border: 'none' }}
+            src="https://www.youtube.com/embed/CzkIb_kEF_M?autoplay=1&mute=1&loop=1&playlist=CzkIb_kEF_M&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+            className="absolute top-0 left-0 w-full h-full grayscale"
+            allow="autoplay; encrypted-media; fullscreen"
+            style={{ border: 'none', pointerEvents: 'none' }}
+            title="Behind the Scenes Video"
           />
         </div>
       </div>

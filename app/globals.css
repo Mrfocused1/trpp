@@ -10,7 +10,13 @@ body {
   background-color: #0a0a0a;
   color: #e5e5e5;
   overflow-x: hidden;
-  cursor: none;
+}
+
+/* Hide cursor on desktop only */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
 }
 
 /* Custom Cursor */

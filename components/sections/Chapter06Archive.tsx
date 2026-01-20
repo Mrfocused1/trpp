@@ -22,9 +22,7 @@ export default function Chapter06Archive() {
     let scrollTriggerInstance: ScrollTrigger | null = null;
 
     const setupAnimation = () => {
-      // Only run on desktop
-      if (window.innerWidth <= 768) return;
-
+      const isMobile = window.innerWidth <= 768;
       const panels = gsap.utils.toArray<HTMLElement>('#ch06-container > div');
 
       if (panels.length === 0) {
@@ -37,21 +35,31 @@ export default function Chapter06Archive() {
       const viewportWidth = window.innerWidth;
       const scrollDistance = totalWidth - viewportWidth;
 
-      scrollTriggerInstance = ScrollTrigger.create({
-        trigger: wrapper,
-        start: 'top top',
-        end: () => `+=${scrollDistance}`,
-        pin: true,
-        scrub: 1,
-        anticipatePin: 1,
-        onUpdate: (self) => {
-          gsap.to(container, {
-            x: -scrollDistance * self.progress,
-            duration: 0,
-            overwrite: 'auto',
-          });
-        },
-      });
+      if (isMobile) {
+        // On mobile, enable native horizontal scroll
+        container.style.overflowX = 'auto';
+        container.style.scrollSnapType = 'x mandatory';
+        panels.forEach((panel) => {
+          (panel as HTMLElement).style.scrollSnapAlign = 'start';
+        });
+      } else {
+        // On desktop, use ScrollTrigger animation
+        scrollTriggerInstance = ScrollTrigger.create({
+          trigger: wrapper,
+          start: 'top top',
+          end: () => `+=${scrollDistance}`,
+          pin: true,
+          scrub: 1,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            gsap.to(container, {
+              x: -scrollDistance * self.progress,
+              duration: 0,
+              overwrite: 'auto',
+            });
+          },
+        });
+      }
     };
 
     // Setup with a small delay to ensure DOM is ready
@@ -69,13 +77,13 @@ export default function Chapter06Archive() {
     <section
       ref={wrapperRef}
       id="ch06-wrapper"
-      className="chapter-section bg-white text-black overflow-hidden"
+      className="chapter-section bg-white text-black overflow-hidden md:overflow-visible"
       data-title="ARCHIVE"
     >
       <div
         ref={containerRef}
         id="ch06-container"
-        className="flex h-screen w-[400vw]"
+        className="flex h-screen w-[400vw] md:overflow-visible"
       >
         {/* Panel 1 */}
         <div className="w-screen h-full flex items-center justify-center border-r border-black/10 relative">

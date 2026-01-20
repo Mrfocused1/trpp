@@ -10,6 +10,13 @@ export default function CustomCursor() {
     const cursor = cursorRef.current;
     if (!cursor) return;
 
+    // Hide cursor on touch devices (mobile/tablet)
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouchDevice) {
+      cursor.style.display = 'none';
+      return;
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
       gsap.to(cursor, {
         x: e.clientX,

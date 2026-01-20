@@ -163,7 +163,7 @@ export default function Chapter01Stamp() {
           preload="metadata"
           poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
         >
-          <source src="/images/trap-intro-new.mp4" type="video/mp4" />
+          <source src="/images/trap-intro.mp4" type="video/mp4" />
         </video>
       </div>
 

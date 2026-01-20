@@ -76,7 +76,7 @@ export default function Chapter06Archive() {
     <section
       ref={wrapperRef}
       id="ch06-wrapper"
-      className="bg-white text-black overflow-hidden h-screen md:h-[300vh]"
+      className="bg-white text-black overflow-hidden h-screen md:h-[500vh]"
       data-title="ARCHIVE"
     >
       <div className="sticky top-0 h-screen">

@@ -76,12 +76,12 @@ export default function Chapter04Route() {
     <section
       id="ch04"
       className="chapter-section h-screen bg-hundred-concrete text-white overflow-hidden"
-      data-title="THE ROUTE"
+      data-title="THE TRAP JOURNEY"
     >
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-matter.png')] opacity-50"></div>
 
       <div className="container mx-auto px-6 h-full flex flex-col justify-center relative z-10">
-        <h2 className="font-display text-4xl mb-4">THE ROUTE</h2>
+        <h2 className="font-display text-4xl mb-4">THE TRAP JOURNEY</h2>
         {/* SVG Map */}
         <div className="relative w-full h-[60vh] border border-white/10 bg-black/20 backdrop-blur-sm rounded-sm">
           <svg

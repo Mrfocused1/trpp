@@ -27,14 +27,20 @@ export default function Chapter01Stamp() {
 
     if (!logo || !line || !video || !videoContainer || !content || !scrollIndicator) return;
 
+    // Mobile detection
+    const isMobile = window.innerWidth < 768;
+
     // Set up video to be scroll-controlled
     video.pause();
+
+    // Ensure video is visible initially
+    gsap.set(videoContainer, { opacity: 1, scale: 1 });
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '#ch01',
         start: 'top top',
-        end: '+=150%',
+        end: isMobile ? '+=100%' : '+=150%',
         scrub: 1,
         pin: true,
       },
@@ -109,7 +115,9 @@ export default function Chapter01Stamp() {
           className="w-full h-full object-cover"
           muted
           playsInline
+          webkit-playsinline="true"
           preload="auto"
+          crossOrigin="anonymous"
         >
           <source src="/images/trap-intro.mp4" type="video/mp4" />
         </video>

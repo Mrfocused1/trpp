@@ -70,9 +70,9 @@ export default function Chapter01Stamp() {
         </div>
         <p
           ref={textRef}
-          className="text-xl md:text-2xl font-light tracking-widest uppercase opacity-0"
+          className="text-2xl md:text-3xl font-gothic tracking-wide opacity-0"
         >
-          Commitment. Showing Up. Staying Solid.
+          It's a secret
         </p>
       </div>
       {/* Animated Route Line SVG */}

@@ -69,7 +69,7 @@ export default function HUD({ totalChapters }: HUDProps) {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-start mix-blend-difference text-white">
       <div className="flex flex-col">
-        <div className="relative w-24 h-8">
+        <div className="relative w-48 h-16">
           <Image
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHGoqE8W0VyW9wSDsDhU9JgoFaZcKLzwaExw&s"
             alt="Trapstar Logo"

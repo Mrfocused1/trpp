@@ -16,6 +16,7 @@ export default function Chapter01Stamp() {
   const videoContainerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
+  const hasInteractedRef = useRef(false);
 
   useEffect(() => {
     const logo = logoRef.current;
@@ -30,8 +31,42 @@ export default function Chapter01Stamp() {
     // Mobile detection
     const isMobile = window.innerWidth < 768;
 
-    // Set up video to be scroll-controlled
-    video.pause();
+    // Ensure video is loaded and ready
+    const loadVideo = () => {
+      if (video.readyState >= 2) {
+        // Video has loaded enough to start
+        video.pause();
+        video.currentTime = 0;
+      } else {
+        // Wait for video to load
+        video.addEventListener('loadeddata', () => {
+          video.pause();
+          video.currentTime = 0;
+        }, { once: true });
+      }
+    };
+
+    loadVideo();
+
+    // iOS requires user interaction to enable video
+    const enableVideoOnInteraction = () => {
+      if (!hasInteractedRef.current && isMobile) {
+        hasInteractedRef.current = true;
+        video.load();
+        video.play().then(() => {
+          video.pause();
+          video.currentTime = 0;
+        }).catch(() => {
+          // Video autoplay blocked, will work with scroll
+        });
+      }
+    };
+
+    // Add interaction listeners for iOS
+    if (isMobile) {
+      document.addEventListener('touchstart', enableVideoOnInteraction, { once: true });
+      document.addEventListener('click', enableVideoOnInteraction, { once: true });
+    }
 
     // Ensure video is visible initially
     gsap.set(videoContainer, { opacity: 1, scale: 1 });
@@ -96,6 +131,10 @@ export default function Chapter01Stamp() {
       if (tl.scrollTrigger) {
         tl.scrollTrigger.kill();
       }
+      if (isMobile) {
+        document.removeEventListener('touchstart', enableVideoOnInteraction);
+        document.removeEventListener('click', enableVideoOnInteraction);
+      }
     };
   }, []);
 
@@ -115,9 +154,8 @@ export default function Chapter01Stamp() {
           className="w-full h-full object-cover"
           muted
           playsInline
-          webkit-playsinline="true"
-          preload="auto"
-          crossOrigin="anonymous"
+          preload="metadata"
+          poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
         >
           <source src="/images/trap-intro.mp4" type="video/mp4" />
         </video>

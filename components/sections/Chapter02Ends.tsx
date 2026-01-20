@@ -94,14 +94,27 @@ export default function Chapter02Ends() {
         </svg>
       </div>
 
-      {/* Hero Image */}
+      {/* Hero Media - Video on Mobile, Image on Desktop */}
       <div className="absolute top-0 right-0 w-full md:w-[60vw] h-full z-0">
         <div ref={imgContainerRef} className="w-full h-full relative">
+          {/* Mobile Video */}
+          <video
+            className="md:hidden w-full h-full object-cover"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+          >
+            <source src="/images/ends-mobile.mp4" type="video/mp4" />
+          </video>
+
+          {/* Desktop Image */}
           <Image
             src="https://uk.trapstarlondon.com/cdn/shop/files/Tri.jpg?v=1768768049&width=1200"
             alt="Trapstar London"
             fill
-            className="object-cover"
+            className="hidden md:block object-cover"
             priority
           />
           <div className="absolute inset-0 bg-hundred-bg opacity-10"></div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -68,7 +69,15 @@ export default function HUD({ totalChapters }: HUDProps) {
   return (
     <nav className="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-start mix-blend-difference text-white">
       <div className="flex flex-col">
-        <h1 className="font-display font-bold text-xl tracking-tighter">1 HUNDRED</h1>
+        <div className="relative w-24 h-8 mb-1">
+          <Image
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHGoqE8W0VyW9wSDsDhU9JgoFaZcKLzwaExw&s"
+            alt="Trapstar Logo"
+            fill
+            className="object-contain object-left"
+            priority
+          />
+        </div>
         <div className="text-xs tracking-widest mt-1 opacity-70">
           {String(currentChapter.index + 1).padStart(2, '0')} — {currentChapter.title}
         </div>

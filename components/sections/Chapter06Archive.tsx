@@ -49,8 +49,10 @@ export default function Chapter06Archive() {
           start: 'top top',
           end: () => `+=${scrollDistance}`,
           pin: true,
+          pinSpacing: true,
           scrub: 1,
           anticipatePin: 1,
+          id: 'archive-horizontal-scroll',
           onUpdate: (self) => {
             gsap.to(container, {
               x: -scrollDistance * self.progress,

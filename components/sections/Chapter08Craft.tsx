@@ -30,6 +30,9 @@ export default function Chapter08Craft() {
         end: '+=1500',
         scrub: 1,
         pin: true,
+        pinSpacing: true,
+        id: 'tech-specs-reveal',
+        anticipatePin: 1,
       },
     });
 

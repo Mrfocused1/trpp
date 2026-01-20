@@ -19,8 +19,6 @@ export default function Chapter06Archive() {
 
     if (!wrapper || !container) return;
 
-    let scrollTriggerInstance: ScrollTrigger | null = null;
-
     const setupAnimation = () => {
       const isMobile = window.innerWidth <= 768;
       const panels = gsap.utils.toArray<HTMLElement>('#ch06-container > div');
@@ -43,21 +41,18 @@ export default function Chapter06Archive() {
           (panel as HTMLElement).style.scrollSnapAlign = 'start';
         });
       } else {
-        // On desktop, use ScrollTrigger WITH pinning
-        // Pin the section and scroll through all 4 panels
-        scrollTriggerInstance = ScrollTrigger.create({
-          trigger: wrapper,
-          start: 'top top',
-          end: () => `+=${scrollDistance * 3}`,
-          pin: true,
-          scrub: 1,
-          id: 'archive-horizontal-scroll',
-          onUpdate: (self) => {
-            gsap.to(container, {
-              x: -scrollDistance * self.progress,
-              duration: 0,
-              overwrite: 'auto',
-            });
+        // On desktop, use horizontal scroll animation
+        gsap.to(container, {
+          x: () => -scrollDistance,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: wrapper,
+            pin: wrapper,
+            scrub: 1,
+            start: 'center center',
+            end: () => `+=${totalWidth}`,
+            invalidateOnRefresh: true,
+            id: 'archive-horizontal-scroll',
           },
         });
       }
@@ -68,9 +63,11 @@ export default function Chapter06Archive() {
 
     return () => {
       clearTimeout(timer);
-      if (scrollTriggerInstance) {
-        scrollTriggerInstance.kill();
-      }
+      ScrollTrigger.getAll().forEach(st => {
+        if (st.vars.id === 'archive-horizontal-scroll') {
+          st.kill();
+        }
+      });
     };
   }, []);
 
